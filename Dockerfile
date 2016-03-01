@@ -62,7 +62,7 @@ RUN curl -fsSL -o oc.zip \
         && mv /dev/shm/ocdownloader-master /usr/src/owncloud/apps/ocdownloader \
         && rm oc.zip
 
-RUN cd /var/www/html && tar cf - --one-file-system -C /usr/src/owncloud . | tar xf - && chown -R www-data:www-data .
+RUN cd /data && tar cf - --one-file-system -C /usr/src/owncloud . | tar xf - && chown -R www-data:www-data .
 
 # Download latest youtube-dl binary, need python runtime
 RUN curl -sSL https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl && \
@@ -72,10 +72,10 @@ RUN curl -sSL https://yt-dl.org/latest/youtube-dl -o /usr/local/bin/youtube-dl &
 # RUN usermod -s /bin/sh www-data
 
 # Make not existing ./data/ for specified permission
-RUN mkdir /var/www/html/data && \
+RUN mkdir /data/owncloud && \
         useradd aria2 && \
-        chown aria2:aria2 /var/www/html/data && \
-        chmod 770 /var/www/html/data && \
+        chown aria2:aria2 /data/owncloud && \
+        chmod 770 /data && \
         usermod -aG aria2 www-data && \
         usermod -aG www-data aria2
 
